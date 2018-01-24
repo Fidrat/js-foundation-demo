@@ -1,5 +1,7 @@
 @charset 'utf-8';
 
+
+/** Foundation stuff **/
 @import 'settings';
 @import 'foundation';
 @import 'motion-ui';
@@ -53,5 +55,8 @@
 
 @include motion-ui-transitions;
 @include motion-ui-animations;
+
+
+/** Our custom sass files **/
 
 @import 'custom';
