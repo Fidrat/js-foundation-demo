@@ -38,7 +38,7 @@ function main(){
     // global array to contain orcs
     var orcArmy = [];
 
-    content += "<p> Let's create some orcs </p>";
+    content += "<p class='small-12'>Let's create some orcs </p>";
     for(let i=0; i < armySize; i++){
         orcArmy[i] = new Orc(); 
     }
@@ -49,13 +49,13 @@ function main(){
     // Reusing the same let variable "orc" to loop through orcs -- let limits this "orc" variable scope's to this block
     // for ... of simple loop : The for...of statement creates a loop iterating over iterable objects 
     for(let orc of orcArmy){
-        content +=  '<div class="card" style="width: 300px;"><div class="card">Orc</div>' 
-            + '<img src="img/grunt.png" style="max-width: 100%;"><div class="card-section">'
-            + '<h4>' + orc.getFullName() + '</h4></div></div>';
+        content +=  '<div class="cell text-center small-3"><div class="card">' 
+            + '<div class="card-section"><img src="img/grunt.png"></div>'
+            + '<p>' + orc.getFullName() + '</p></div></div>';
     }
 
     // The orc variable is still containing the first orc of the orcArmy array.
-    content += "<p> The first orc is : " + orc.getFullName() + "</p>";
+    content += "<p class='small-12'> The first orc is : " + orc.getFullName() + "</p>";
 
     // Write content to the browser
     document.getElementById('content').innerHTML = content;
