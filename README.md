@@ -3,7 +3,9 @@
 
 ## Installation
 
-Install/update nvm
+Install/update nvm as explained here
+
+https://github.com/creationix/nvm
 
 ```bash
 curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.8/install.sh | bash
@@ -15,15 +17,13 @@ Close and reopen your terminal
 nvm --version
 ```
 
-Install latest stable Node.js (This demo had been built with 9.4.0)
+Install latest Node.js (This demo had been built with 9.4.0)
 
 ```bash
 nvm ls-remote
 nvm install x.x.x
 nvm ls
 ```
-
-https://github.com/creationix/nvm
 
 ```bash
 git clone https://github.com/Fidrat/js-foundation-demo.git
