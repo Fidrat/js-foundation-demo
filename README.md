@@ -36,7 +36,7 @@ npm install
 bower install
 ```
 
-This command will probably give you the appropriate permissions. **DO NOT run install with sudo**
+This command will probably give you the appropriate permissions. **DO NOT run npm install commands with sudo**
 ```bash
 sudo chown -R $USER:$(id -gn $USER) /home/$USER/.config
 ```
