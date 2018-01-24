@@ -3,15 +3,14 @@
 
 ## Installation
 
-Install/update nvm as explained here
-
+Install/update nvm as explained here 
 https://github.com/creationix/nvm
+
+Or just run this command and then **close and reopen your terminal**
 
 ```bash
 curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.8/install.sh | bash
 ```
-
-Close and reopen your terminal
 
 ```bash
 nvm --version
@@ -30,12 +29,18 @@ git clone https://github.com/Fidrat/js-foundation-demo.git
 cd js-foundation-demo
 ```
 
-Install dependencies
+Install dependencies, if you run into "file not found" problems it is probably a file permission problem. See below.
 ```bash
 npm install bower -g
 npm install
 bower install
 ```
+
+This command will probably give you the appropriate permissions. **DO NOT run install with sudo**
+```bash
+sudo chown -R $USER:$(id -gn $USER) /home/$USER/.config
+```
+If it does not solve it, close and reopen your terminal again, nvm will tell you more details.
 
 Build the project and launch the server with livereload
 
