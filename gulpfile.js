@@ -9,7 +9,7 @@ var sassPaths = [
 ];
 
 gulp.task('sass', function () {
-    return gulp.src('scss/app.scss')
+    return gulp.src('./scss/app.scss')
             .pipe($.sass({
                 includePaths: sassPaths,
                 outputStyle: 'compressed' // if css compressed **file size**
@@ -18,7 +18,8 @@ gulp.task('sass', function () {
             .pipe($.autoprefixer({
                 browsers: ['last 2 versions', 'ie >= 9']
             }))
-            .pipe(gulp.dest('css'));
+            .pipe(gulp.dest('./css'))
+            .pipe(connect.reload());
 });
 
 gulp.task('watch', function () {
@@ -34,9 +35,11 @@ gulp.task('html', function () {
 
 gulp.task('connect', function () {
     connect.server({
-        root: 'app',
+        //root: 'app',
         livereload: true
     });
 });
 
-gulp.task('default', ['connect', 'watch'], function () { });
+gulp.task('default', ['connect', 'sass', 'watch'], function () {
+    console.log('default');
+});
