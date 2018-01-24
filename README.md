@@ -55,6 +55,4 @@ open http://localhost:8080/ in a browser
 ```bash
 npm install -g foundation-cli
 npm install -g gulp
-
-ref : https://github.com/zurb/foundation-cli
 ```
