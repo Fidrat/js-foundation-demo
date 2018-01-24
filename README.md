@@ -42,6 +42,9 @@ sudo chown -R $USER:$(id -gn $USER) /home/$USER/.config
 ```
 If it does not solve it, close and reopen your terminal again, nvm will tell you more details.
 
+
+### Launch
+
 Build the project and launch the server with livereload
 
 ```bash
