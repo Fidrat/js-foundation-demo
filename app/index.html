@@ -1,56 +1,54 @@
 <!doctype html>
 <html class="no-js" lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Js Demo</title>
-    <link rel="stylesheet" href="css/app.css">
-  </head>
-  <body>
-    <div class="grid-container">
-      <div class="grid-x grid-padding-x">
-          
-        <div class="large-12 cell">
-          <h1>Js demo about ES5 & ES6 vanilla js functionalities.</h1>
-        </div>
-          
-          
-        <div class="large-12 cell">
-            <p> Frontend development and Javascript have evolved a lot these last year. 
-                It became obvious to me that our backend oriented team have left behind a load of interesting improvements in Javascript.
-                This demo is an attempt to illustrate some of the "new" functionalities that we have not yet adopted. 
-            </p>
-        </div>
-        
-        <div class="large-12 cell">
-            
-            <p> We'll be working with these files :</p>
-            <ul>
-                <li>js/app.js -- main lab file</li>
-                <li>js/util.js -- collection of utilities, some already demonstrated code may be move there from app.js when checking out to a new step.</li>
-                <li>app/index.js -- this file, the one where we'll display the rendering of our code.</li>
-            </ul>
-            
-            <p> Go ahead and open this project in your IDE, then checkout to the first step of this demonstration.</p>
-            
-            <div class="cell callout padding-x">
-                <code class="bash">
-                    git checkout 1/introduction
-                </code>
-            </div>
-            
-         
-        </div>
-          
-          
-      </div>      
-    </div>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Js Demo</title>
+        <link rel="stylesheet" href="css/app.css">
+    </head>
+    <body>
+        <div class="grid-container">
+            <div class="grid-x grid-padding-x">
 
-    <script src="bower_components/jquery/dist/jquery.js"></script>
-    <script src="bower_components/what-input/dist/what-input.js"></script>
-    <script src="bower_components/foundation-sites/dist/js/foundation.js"></script>
-    <script src="js/util.js"></script>
-    <script src="js/app.js"></script>
-  </body>
+                <div class="large-12 cell">
+                    <h1>1 - Introduction</h1>
+                </div>
+
+
+                <div class="large-12 cell">
+                    <section class="explanations">
+                        <ul>
+                            <li><a href="https://developer.mozilla.org/en-US/docs/Glossary/Hoisting"> Hoisting terminology </a></li>
+                            <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/let"> Let statement </a></li>
+                            <li>
+                                <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions"> Arrow function </a>
+                                expression simple exemple (we'll illustrate more interesting uses with the "this" js problem later on)
+                            </li>
+                            <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/for...of">for...of loop </a> simple exemple</li>
+                        </ul>
+                    </section>  
+                </div>
+
+                <div class="large-12 cell">
+                    <hr>
+                </div>
+
+
+                <div class="large-12 cell">
+                    <section class="playground">
+                        <div id='content'></div>  
+                    </section>  
+                </div>
+
+
+            </div>      
+        </div>
+
+        <script src="bower_components/jquery/dist/jquery.js"></script>
+        <script src="bower_components/what-input/dist/what-input.js"></script>
+        <script src="bower_components/foundation-sites/dist/js/foundation.js"></script>
+        <script src="js/util.js"></script>
+        <script src="js/app.js"></script>
+    </body>
 </html>
