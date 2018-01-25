@@ -10,28 +10,28 @@ const idGenerator = idMaker();
 
 
 /*** Orc object constructor ****/
-function Orc(lastName){  
+function Orc(lastName){
     // ! Here we are using the arrow syntax to avoid holding the value of this as a property.
     // var me = this;
-    const id = idGenerator.next().value; // ! Using const inside the Orc object "id" become like a private immutable variable
+    const id = idGenerator.next().value;
     var speechGenerator = orcSpeech(this);
-    
+
     var firstName = setOrcName();
     var lastName = lastName ? lastName : setOrcName();
-    
+
     this.getFullName = () => firstName + ' ' + lastName; // getter for the Orc full name
     this.getFirstName = () => firstName; // getter for the Orc first name
     this.getLastName = () => lastName; // getter for the Orc last name
     this.getId = () => id; // getter for "private" Orc id
-    
-    // Orcish speech generator 
-    // ! we added an orc object parameter since we can't use the arrow annotation with generators
+
+    // Orcish speech generator
+    // ! we added an orc object parameter because we can't use the arrow annotation with generators
     function* orcSpeech(orc){
         yield "Ur house will burn in the name of the " + orc.getLastName() + " clan.";
         yield "Hungry! Lunch yet?";
         yield orc.getFirstName() + " will chew ur eyes!";
     }
-    
+
     // ! With the arrow syntax, the this is not redefined and is still set to the parent Orc object
     this.talk = (target, next = speechGenerator.next()) =>{
         //console.log(next);
@@ -55,11 +55,11 @@ function Orc(lastName){
         }else{
             target.innerHTML = '';
             someoneIsTalking = false;
-            speechGenerator = orcSpeech(this); // Reinstantiate generator so we can have the same orc talk again
+            speechGenerator = orcSpeech(this);
         }
     };
-    
-}; 
+
+};
 /**** end of Orc object constructor ****/
 
 
@@ -70,7 +70,7 @@ function main(){
     var orcArmy = [];
 
     for(let i=0; i < armySize; i++){
-        orcArmy[i] = new Orc(); 
+        orcArmy[i] = new Orc();
     }
 
     for(let orc of orcArmy){
@@ -79,18 +79,18 @@ function main(){
 
     // Write content to the browser
     document.getElementById('content').innerHTML = content;
-    
-    
+
+
     /************** events ***************/
     var btn = document.getElementById('talk-trigger');
-   
+
     btn.addEventListener('click', function() {
         if (someoneIsTalking) {
             return;
         }
         orcArmy[getRandomInt(orcArmy.length,1)].talk( document.getElementById('talk-target') );
     });
-    
+
 };
 
 // Equivalent to jQuery $(document).ready() in vanilla js
