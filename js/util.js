@@ -29,10 +29,17 @@ var setOrcName = (rand = getRandomInt(5,2)) => {
     return name.charAt(0).toUpperCase() + name.slice(1);
 };
 
-// Infinite id generator 
+// Infinite id generator
 function* idMaker() {
     var index = 1;
     while(true){
         yield index++;
     }
+}
+
+// Orcish speech generator
+function* orcSpeech(orc){
+    yield "Ur house will burn in the name of the " + orc.getLastName() + " clan.";
+    yield "Hungry! Lunch yet?";
+    yield orc.getFirstName() + " will chew ur eyes!";
 }

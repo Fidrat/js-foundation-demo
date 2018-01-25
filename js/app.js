@@ -11,8 +11,6 @@ const idGenerator = idMaker();
 
 /*** Orc object constructor ****/
 function Orc(lastName){
-    // ! Here we are using the arrow syntax to avoid holding the value of this as a property.
-    // var me = this;
     const id = idGenerator.next().value;
     var speechGenerator = orcSpeech(this);
 
@@ -24,17 +22,8 @@ function Orc(lastName){
     this.getLastName = () => lastName; // getter for the Orc last name
     this.getId = () => id; // getter for "private" Orc id
 
-    // Orcish speech generator
-    // ! we added an orc object parameter because we can't use the arrow annotation with generators
-    function* orcSpeech(orc){
-        yield "Ur house will burn in the name of the " + orc.getLastName() + " clan.";
-        yield "Hungry! Lunch yet?";
-        yield orc.getFirstName() + " will chew ur eyes!";
-    }
-
-    // ! With the arrow syntax, the this is not redefined and is still set to the parent Orc object
+    // Orcish talking management
     this.talk = (target, next = speechGenerator.next()) =>{
-        //console.log(next);
         someoneIsTalking = true;
 
         if(!next.done){
@@ -42,7 +31,7 @@ function Orc(lastName){
             let text = next.value;
             let timer = 0;
 
-            //! We can use for ... of loop on a string since it is an iterable object in js
+            //Print a char every 0.05 seconds
             for(let char of text){
                 setTimeout( () => {
                    target.innerHTML += char;
@@ -66,13 +55,14 @@ function Orc(lastName){
 
 // MAIN
 function main(){
-    // orc oject array
+    // orc object array
     var orcArmy = [];
 
+    // generate some orcs
     for(let i=0; i < armySize; i++){
         orcArmy[i] = new Orc();
     }
-
+    // render orcs in foundation cards
     for(let orc of orcArmy){
         content += orcCardHtmlBegin + '<p>' + '#' + orc.getId() + ' ' + orc.getFullName() + '</p>' + orcCardHtmlEnd;
     }
