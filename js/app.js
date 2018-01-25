@@ -6,24 +6,13 @@ $(document).foundation();
 var content = "";
 const idGenerator = idMaker();
 
-// ! infinite generator exemple
-// @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Generator
-function* idMaker() {
-    var index = 1;
-    while(true){
-        yield index++;
-    }
-}
-
-
-
 
 /*** Orc object constructor ****/
 function Orc(lastName){  
-    var me = this;
+    // ! Here we are using the arrow syntax to avoid holding the value of this as a property.
+    // var me = this;
     const id = idGenerator.next().value; // ! Using const inside the Orc object "id" become like a private immutable variable
-    var speechGenerator = orcSpeech();
-    
+    var speechGenerator = orcSpeech(this);
     
     var firstName = setOrcName();
     var lastName = lastName ? lastName : setOrcName();
@@ -33,29 +22,39 @@ function Orc(lastName){
     this.getLastName = () => lastName; // getter for the Orc last name
     this.getId = () => id; // getter for "private" Orc id
     
-    // ! Generator function, finite generator exemple
-    function* orcSpeech(){
-        yield "Ur house will burn in the name of the " + me.getLastName() + " clan.";
+    // Orcish speech generator 
+    // ! we added an orc object parameter since we can't use the arrow annotation with generators
+    function* orcSpeech(orc){
+        yield "Ur house will burn in the name of the " + orc.getLastName() + " clan.";
         yield "Hungry! Lunch yet?";
-        yield me.getFirstName() + " will chew ur eyes!";
+        yield orc.getFirstName() + " will chew ur eyes!";
     }
     
-    // ! Recursive member function using the above generator
-    this.talk = function(target, next = speechGenerator.next()){
+    // ! With the arrow syntax, the this is not redefined and is still set to the parent Orc object
+    this.talk = (target, next = speechGenerator.next()) =>{
         //console.log(next);
-        
+
         if(!next.done){
-            target.innerHTML = me.getFullName() + " say:<br>- " + next.value;
-            
-            setTimeout( function(){
-                me.talk(target, speechGenerator.next());
-            }, 2000 );
+            target.innerHTML = this.getFullName() + " say:<br>- ";
+            let text = next.value;
+            let timer = 0;
+
+            //! We can use for ... of loop on a string since it is an iterable object in js
+            for(let char of text){
+                setTimeout( () => {
+                   target.innerHTML += char;
+                }, 50*(timer++) );
+            }
+
+            setTimeout( () => {
+                this.talk(target, speechGenerator.next());
+            }, 3000 );
         }else{
             target.innerHTML = '';
-            speechGenerator = orcSpeech(); // Reinstantiate generator so we can have the same orc talk again
+            speechGenerator = orcSpeech(this); // Reinstantiate generator so we can have the same orc talk again
         }
-        
     };
+    
 }; 
 /**** end of Orc object constructor ****/
 
