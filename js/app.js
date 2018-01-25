@@ -4,6 +4,8 @@ $(document).foundation();
 
 // instantiate global variables and constants
 var content = "";
+var someoneIsTalking = false;
+
 const idGenerator = idMaker();
 
 
@@ -33,6 +35,7 @@ function Orc(lastName){
     // ! With the arrow syntax, the this is not redefined and is still set to the parent Orc object
     this.talk = (target, next = speechGenerator.next()) =>{
         //console.log(next);
+        someoneIsTalking = true;
 
         if(!next.done){
             target.innerHTML = this.getFullName() + " say:<br>- ";
@@ -51,6 +54,7 @@ function Orc(lastName){
             }, 3000 );
         }else{
             target.innerHTML = '';
+            someoneIsTalking = false;
             speechGenerator = orcSpeech(this); // Reinstantiate generator so we can have the same orc talk again
         }
     };
@@ -79,7 +83,11 @@ function main(){
     
     /************** events ***************/
     var btn = document.getElementById('talk-trigger');
+   
     btn.addEventListener('click', function() {
+        if (someoneIsTalking) {
+            return;
+        }
         orcArmy[getRandomInt(orcArmy.length,1)].talk( document.getElementById('talk-target') );
     });
     
