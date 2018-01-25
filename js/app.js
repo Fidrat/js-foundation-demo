@@ -4,7 +4,10 @@ $(document).foundation();
 
 // instantiate global variables and constants
 var content = "";
+var someoneIsTalking = false;
+
 const idGenerator = idMaker();
+
 
 // ! infinite generator exemple
 // @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Generator
@@ -43,6 +46,7 @@ function Orc(lastName){
     // ! Recursive member function using the above generator
     this.talk = function(target, next = speechGenerator.next()){
         //console.log(next);
+        someoneIsTalking = true;
         
         if(!next.done){
             target.innerHTML = me.getFullName() + " say:<br>- " + next.value;
@@ -52,6 +56,7 @@ function Orc(lastName){
             }, 2000 );
         }else{
             target.innerHTML = '';
+            someoneIsTalking = false;
             speechGenerator = orcSpeech(); // Reinstantiate generator so we can have the same orc talk again
         }
         
@@ -81,6 +86,9 @@ function main(){
     /************** events ***************/
     var btn = document.getElementById('talk-trigger');
     btn.addEventListener('click', function() {
+        if(someoneIsTalking){
+            return;
+        }
         orcArmy[getRandomInt(orcArmy.length,1)].talk( document.getElementById('talk-target') );
     });
     
