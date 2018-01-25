@@ -2,46 +2,63 @@
 // init foundation stuff
 $(document).foundation();
 
-// instantiate global variables
+// instantiate global variables and constants
 var content = "";
+const idGenerator = idMaker();
 
-// Orc object simple constructor
+// ! infinite generator exemple
+// @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Generator
+function* idMaker() {
+    var index = 1;
+    while(true){
+        yield index++;
+    }
+}
+
+
+
+
+/*** Orc object constructor ****/
 function Orc(lastName){  
+    var me = this;
+    const id = idGenerator.next().value; // ! Using const inside the Orc object "id" become like a private immutable variable
+    var speechGenerator = orcSpeech();
+    
+    
     var firstName = setOrcName();
     var lastName = lastName ? lastName : setOrcName();
     
-    // ! Arrow syntax 1 : Shorter syntax
     this.getFullName = () => firstName + ' ' + lastName; // getter for the Orc full name
-    // Non arrow equivalent
-    // this.getFullName = function(){
-    //     return this.firstName + ' ' + this.lastName;
-    // };    
-};
-
-/**
- * ! Functions and variables are hoisted : 
- * Hoisting is a JavaScript mechanism where variables and function declarations are moved to the top of their scope before code execution.
- * ! In this case it means that even if setOrcName() is declared after its use in the script, it is interpreted before because it is hoisted.
- * 
- * @see https://developer.mozilla.org/en-US/docs/Glossary/Hoisting
- */
-// ! arrow expression that return a random name
-var setOrcName = (rand = getRandomInt(5,2)) => {
-    var name = '';
-    for(let i=0; i < rand; i++){
-        name += getConsonantVowelPair();
+    this.getFirstName = () => firstName; // getter for the Orc first name
+    this.getLastName = () => lastName; // getter for the Orc last name
+    this.getId = () => id; // getter for "private" Orc id
+    
+    // ! Generator function, finite generator exemple
+    function* orcSpeech(){
+        yield "Ur house will burn in the name of the " + me.getLastName() + " clan.";
+        yield "Hungry! Lunch yet?";
+        yield me.getFirstName() + " will chew ur eyes!";
     }
-    return name.charAt(0).toUpperCase() + name.slice(1);
-};
-// ! Non arrow equivalent
-//function setOrcName(){
-//    let rand = getRandomInt(5,2);
-//    var name = '';
-//    for(let i=0; i < rand; i++){
-//        name += getConsonantVowelPair();
-//    }
-//    return name.charAt(0).toUpperCase() + name.slice(1);
-//};
+    
+    // ! Recursive member function using the above generator
+    this.talk = function(target, next = speechGenerator.next()){
+        //console.log(next);
+        
+        if(!next.done){
+            target.innerHTML = me.getFullName() + " say:<br>- " + next.value;
+            
+            setTimeout( function(){
+                me.talk(target, speechGenerator.next());
+            }, 2000 );
+        }else{
+            target.innerHTML = '';
+            speechGenerator = orcSpeech(); // Reinstantiate generator so we can have the same orc talk again
+        }
+        
+    };
+}; 
+/**** end of Orc object constructor ****/
+
 
 
 // MAIN
@@ -52,21 +69,22 @@ function main(){
     for(let i=0; i < armySize; i++){
         orcArmy[i] = new Orc(); 
     }
-    
-    // Instantiating the variable "orc" with let
-    let orc = orcArmy[0];
-    
-    // ! Reusing the same let variable "orc" to loop through orcs -- let limits this "orc" variable scope's to this block
-    // ! for ... of simple loop : The for...of statement creates a loop iterating over iterable objects 
+
     for(let orc of orcArmy){
-        content += orcCardHtmlBegin + '<p>' + orc.getFullName() + '</p>' + orcCardHtmlEnd;
+        content += orcCardHtmlBegin + '<p>' + '#' + orc.getId() + ' ' + orc.getFullName() + '</p>' + orcCardHtmlEnd;
     }
 
     // Write content to the browser
-    // ! The orc variable is still containing the first orc of the orcArmy array.
-    document.getElementById('first-orc').innerHTML = orc.getFullName();
     document.getElementById('content').innerHTML = content;
-}
+    
+    
+    /************** events ***************/
+    var btn = document.getElementById('talk-trigger');
+    btn.addEventListener('click', function() {
+        orcArmy[getRandomInt(orcArmy.length,1)].talk( document.getElementById('talk-target') );
+    });
+    
+};
 
 // Equivalent to jQuery $(document).ready() in vanilla js
 document.addEventListener("DOMContentLoaded", function() {

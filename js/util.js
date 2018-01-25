@@ -19,3 +19,12 @@ function getRandomInt(max, min=0){
 function getConsonantVowelPair(){
     return consonant[ getRandomInt(consonant.length) ] + vowel[ getRandomInt(vowel.length) ];
 };
+
+// Return a random Orc name
+var setOrcName = (rand = getRandomInt(5,2)) => {
+    var name = '';
+    for(let i=0; i < rand; i++){
+        name += getConsonantVowelPair();
+    }
+    return name.charAt(0).toUpperCase() + name.slice(1);
+};
