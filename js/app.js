@@ -1,6 +1,8 @@
 "use strict";
+// init foundation stuff
 $(document).foundation();
 
+// instantiate global variables
 var content = "";
 
 // Orc object simple constructor
@@ -19,6 +21,8 @@ function Orc(lastName){
 /**
  * ! Functions and variables are hoisted : 
  * Hoisting is a JavaScript mechanism where variables and function declarations are moved to the top of their scope before code execution.
+ * ! In this case it means that even if setOrcName() is declared after its use in the script, it is interpreted before because it is hoisted.
+ * 
  * @see https://developer.mozilla.org/en-US/docs/Glossary/Hoisting
  */
 
@@ -35,10 +39,9 @@ function setOrcName(){
 
 // MAIN
 function main(){
-    // global array to contain orcs
+    // orc oject array
     var orcArmy = [];
 
-    content += "<p class='small-12'>Let's create some orcs </p>";
     for(let i=0; i < armySize; i++){
         orcArmy[i] = new Orc(); 
     }
@@ -46,18 +49,15 @@ function main(){
     // Instantiating the variable "orc" with let
     let orc = orcArmy[0];
     
-    // Reusing the same let variable "orc" to loop through orcs -- let limits this "orc" variable scope's to this block
-    // for ... of simple loop : The for...of statement creates a loop iterating over iterable objects 
+    // ! Reusing the same let variable "orc" to loop through orcs -- let limits this "orc" variable scope's to this block
+    // ! for ... of simple loop : The for...of statement creates a loop iterating over iterable objects 
     for(let orc of orcArmy){
-        content +=  '<div class="cell text-center small-3"><div class="card">' 
-            + '<div class="card-section"><img src="img/grunt.png"></div>'
-            + '<p>' + orc.getFullName() + '</p></div></div>';
+        content += orcCardHtmlBegin + '<p>' + orc.getFullName() + '</p>' + orcCardHtmlEnd;
     }
 
-    // The orc variable is still containing the first orc of the orcArmy array.
-    content += "<p class='small-12'> The first orc is : " + orc.getFullName() + "</p>";
-
     // Write content to the browser
+    // ! The orc variable is still containing the first orc of the orcArmy array.
+    document.getElementById('first-orc').innerHTML = orc.getFullName();
     document.getElementById('content').innerHTML = content;
 }
 

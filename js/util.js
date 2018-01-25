@@ -5,6 +5,9 @@ const consonant = ['b', 'd', 'f', 'g', 'k', 't', 'p', 'z'];
 const vowel = ['a', 'e', 'i', 'o', 'u', 'y'];
 const armySize = 3;
 
+const orcCardHtmlBegin = '<div class="cell text-center large-3 medium-6"><div class="card"><div class="card-section"><img src="img/grunt.png"></div>';
+const orcCardHtmlEnd = '</div></div>';
+
 /************** utils ***************/
 
 // Return a random integer between min (included) & max (excluded)
