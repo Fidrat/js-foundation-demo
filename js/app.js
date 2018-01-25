@@ -25,16 +25,23 @@ function Orc(lastName){
  * 
  * @see https://developer.mozilla.org/en-US/docs/Glossary/Hoisting
  */
-
-// Return a random name
-function setOrcName(){
-    let rand = getRandomInt(5,2);
-    let name = '';
+// ! arrow expression that return a random name
+var setOrcName = (rand = getRandomInt(5,2)) => {
+    var name = '';
     for(let i=0; i < rand; i++){
         name += getConsonantVowelPair();
     }
     return name.charAt(0).toUpperCase() + name.slice(1);
 };
+// ! Non arrow equivalent
+//function setOrcName(){
+//    let rand = getRandomInt(5,2);
+//    var name = '';
+//    for(let i=0; i < rand; i++){
+//        name += getConsonantVowelPair();
+//    }
+//    return name.charAt(0).toUpperCase() + name.slice(1);
+//};
 
 
 // MAIN
