@@ -7,19 +7,35 @@ var content = "";
 var someoneIsTalking = false;
 
 const idGenerator = idMaker();
+const familyIdGenerator = idMaker();
+
+/**
+ * Orcish family manager
+ */ 
+function OrcFamily(){
+    const id = familyIdGenerator.next().value;
+    const name = setOrcName();
+
+    this.getId = () => id; // getter for "private id"
+    this.getName = () => name; // getter for "private name"
+}; // end of OrcFamily
 
 
-/*** Orc object constructor ****/
-function Orc(lastName){
+/**
+ *  Orc object constructor
+ **/
+function Orc(orcFamily = null){
     const id = idGenerator.next().value;
     var speechGenerator = orcSpeech(this);
 
     var firstName = setOrcName();
     var lastName = lastName ? lastName : setOrcName();
+    var family = orcFamily;
 
     this.getFullName = () => firstName + ' ' + lastName; // getter for the Orc full name
+    this.getFamily = () => orcFamily; // getter for the Orc family object
     this.getFirstName = () => firstName; // getter for the Orc first name
-    this.getLastName = () => lastName; // getter for the Orc last name
+    this.getLastName = () => orcFamily ? family.getName() : ''; // getter for the Orc last name
     this.getId = () => id; // getter for "private" Orc id
 
     // Orcish talking management

@@ -1,3 +1,13 @@
+"use strict";
+
+// constants
+const consonant = ['b', 'd', 'f', 'g', 'k', 't', 'p', 'z'];
+const vowel = ['a', 'e', 'i', 'o', 'u', 'y'];
+const armySize = 3;
+
+const orcCardHtmlBegin = '<div class="cell text-center large-3 medium-6"><div class="card"><div class="card-section"><img src="img/grunt.png"></div>';
+const orcCardHtmlEnd = '</div></div>';
+
 /************** utils ***************/
 
 /**
@@ -55,7 +65,11 @@ function* idMaker() {
  * @returns string an orc speech sentence
  */ 
 function* orcSpeech(orc){
-    yield "Ur house will burn in the name of the " + orc.getLastName() + " clan.";
+    if(orc.getFamily()){ // we skip the first sentence if the Orc is an orphan
+        yield "Ur house will burn in the name of the " + orc.getLastName() + " clan.";
+    }else{
+        yield orc.getFirstName() + " don't need a family.";
+    }
     yield "Hungry! Lunch yet?";
-    yield orc.getFirstName() + " will chew ur eyeballs!";
-}
+    yield orc.getFirstName() + " will chew ur eyes!";
+};
