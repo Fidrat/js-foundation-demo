@@ -78,7 +78,7 @@ function main(){
         if (someoneIsTalking) {
             return;
         }
-        orcArmy[getRandomInt(orcArmy.length,1)].talk( document.getElementById('talk-target') );
+        getRandomArrayValue(orcArmy).talk( document.getElementById('talk-target') );
     });
 
 };
