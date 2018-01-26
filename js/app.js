@@ -6,23 +6,23 @@ $(document).foundation();
 var content = "";
 
 // Orc object simple constructor
-function Orc(lastName){  
+function Orc(lastName){
     var firstName = setOrcName();
     var lastName = lastName ? lastName : setOrcName();
-    
+
     // ! Arrow syntax 1 : Shorter syntax
     this.getFullName = () => firstName + ' ' + lastName; // getter for the Orc full name
     // Non arrow equivalent
     // this.getFullName = function(){
     //     return this.firstName + ' ' + this.lastName;
-    // };    
+    // };
 };
 
 /**
- * ! Functions and variables are hoisted : 
+ * ! Functions and variables are hoisted :
  * Hoisting is a JavaScript mechanism where variables and function declarations are moved to the top of their scope before code execution.
  * ! In this case it means that even if setOrcName() is declared after its use in the script, it is interpreted before because it is hoisted.
- * 
+ *
  * @see https://developer.mozilla.org/en-US/docs/Glossary/Hoisting
  */
 // ! arrow expression that return a random name
@@ -48,16 +48,17 @@ var setOrcName = (rand = getRandomInt(5,2)) => {
 function main(){
     // orc oject array
     var orcArmy = [];
-
-    for(let i=0; i < armySize; i++){
-        orcArmy[i] = new Orc(); 
-    }
     
+    // generate some orcs
+    for(let i=0; i < armySize; i++){
+        orcArmy[i] = new Orc();
+    }
+
     // Instantiating the variable "orc" with let
     let orc = orcArmy[0];
-    
+
     // ! Reusing the same let variable "orc" to loop through orcs -- let limits this "orc" variable scope's to this block
-    // ! for ... of simple loop : The for...of statement creates a loop iterating over iterable objects 
+    // ! for ... of simple loop : The for...of statement creates a loop iterating over iterable objects
     for(let orc of orcArmy){
         content += orcCardHtmlBegin + '<p>' + orc.getFullName() + '</p>' + orcCardHtmlEnd;
     }
