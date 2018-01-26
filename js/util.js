@@ -51,7 +51,10 @@ var setOrcName = (rand = getRandomInt(5,2)) => {
     return name.charAt(0).toUpperCase() + name.slice(1);
 };
 
-// Infinite id generator 
+/**
+ * Infinite id generator
+ * @returns int auto incremented
+ */ 
 function* idMaker() {
     var index = 1;
     while(true){
