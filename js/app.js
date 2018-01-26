@@ -36,7 +36,7 @@ function Orc(orcFamily = null){
     this.getId = () => id; // getter for "private" Orc id
     this.getCard = () => card; // getter for "private" Orc card
     
-    this.getCardWithWrapper = () => { // getter for card wrappers : column -> cell
+    this.getCardWithWrapper = () => { // ! getter for card wrappers : row -> cell -> card & row -> speechCell
         rowWrapper.appendChild(cardCell);
         cardCell.appendChild(card);
         rowWrapper.appendChild(speechNode);
@@ -57,13 +57,13 @@ function Orc(orcFamily = null){
     var family = orcFamily;
     var isTalking = false;
     
-    // DOM Node elements as properties
+    // ! DOM Node elements as properties
     var card = buildCard(this); // orc card 
     
-    var cardCell = document.createElement('div'); // direct wrapper for orc card
+    var cardCell = document.createElement('div'); // direct wrapper for orc card - belong in a foundation'c row
     cardCell.classList.add('large-3', 'medium-6', 'orc-wrapper', 'cell');
     
-    var rowWrapper =  document.createElement('div');
+    var rowWrapper =  document.createElement('div'); // wrapper for cells. grid-x means its horizontal
     rowWrapper.classList.add('grid-x', 'grid-margin-x', 'text-center');
     
     // ! NODE element that will be appended to the DOM as a temporary container when an Orc is talking
@@ -73,7 +73,7 @@ function Orc(orcFamily = null){
 
     // Orcish talking management
     this.talk = (target = speechNode, next = speechGenerator.next()) =>{
-        this.setIsTalking(true);
+        this.setIsTalking(true); // Flag to ensure an orc can't talk multiple time at once
 
         if(!next.done){
             target.innerHTML = this.getFullName() + " say:<br>- ";
