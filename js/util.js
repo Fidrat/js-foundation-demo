@@ -4,9 +4,9 @@
 const consonant = ['b', 'd', 'f', 'g', 'k', 't', 'p', 'z'];
 const vowel = ['a', 'e', 'i', 'o', 'u', 'y'];
 const armySize = 3;
-
-const orcCardHtmlBegin = '<div class="cell text-center large-3 medium-6"><div class="card"><div class="card-section"><img src="img/grunt.png"></div>';
-const orcCardHtmlEnd = '</div></div>';
+const orcishFamilyNumber = 2;
+//const orcCardHtmlBegin = '<div class="cell text-center large-3 medium-6"><div class="card"><div class="card-section"><img src="img/grunt.png"></div>';
+//const orcCardHtmlEnd = '</div></div>';
 
 /************** utils ***************/
 
@@ -31,7 +31,7 @@ function getRandomArrayValue(arr){
 
 /**
  * Return a concatenated pair of consonant-vowel
- * @returns {String}
+ * @returns String 
  */ 
 function getConsonantVowelPair(){
     return consonant[ getRandomInt(consonant.length) ] + vowel[ getRandomInt(vowel.length) ];
@@ -40,7 +40,7 @@ function getConsonantVowelPair(){
 /**
  * Return a random Orc name
  * @param rand int
- * @returns {String}
+ * @returns String
  */ 
 var setOrcName = (rand = getRandomInt(5,2)) => {
     var name = '';
@@ -60,8 +60,10 @@ function* idMaker() {
         yield index++;
     }
 }
+
 /**
  * Orcish speech generator
+ * @param orc Orc
  * @returns string an orc speech sentence
  */ 
 function* orcSpeech(orc){
@@ -71,5 +73,5 @@ function* orcSpeech(orc){
         yield orc.getFirstName() + " don't need a family.";
     }
     yield "Hungry! Lunch yet?";
-    yield orc.getFirstName() + " will chew ur eyes!";
+    yield orc.getFirstName() + " will chew ur eyeballs!";
 };
