@@ -26,39 +26,54 @@ function OrcFamily(){
  *  @param orcFamily OrcFamily (optionnal)
  **/
 function Orc(orcFamily = null){
-    const id = idGenerator.next().value;
- 
-    this.getFullName = () => firstName + ' ' + lastName; // getter for the Orc full name
+    
+    // getter and setters
+    this.getFullName = () => firstName + ' ' + lastName; // getter for the Orc full name - not a property
+    
     this.getFamily = () => family; // getter for the Orc family object
     this.getFirstName = () => firstName; // getter for the Orc first name
     this.getLastName = () => orcFamily ? family.getName() : ''; // getter for the Orc last name
     this.getId = () => id; // getter for "private" Orc id
     this.getCard = () => card; // getter for "private" Orc card
     
-    this.getCardWithWrapper = () => {
-        let wrapper = buildWrapperForOrcCard();
-        wrapper.firstChild.appendChild(card);
-        return wrapper;
+    this.getCardWithWrapper = () => { // getter for card wrappers : column -> cell
+        rowWrapper.appendChild(cardCell);
+        cardCell.appendChild(card);
+        rowWrapper.appendChild(speechNode);
+        
+        return rowWrapper;
     }; 
     
-    this.isTalking = () => isTalking;
-    this.setIsTalking = (b) => { isTalking = b; };
+    this.isTalking = () => isTalking; // getter for boolean isTalking
+    this.setIsTalking = (talking) => { isTalking = talking === true ? true : false; }; // setter for isTalking
     
-
+    
+    // Orc object properties
+    const id = idGenerator.next().value;
     var speechGenerator = orcSpeech(this);
+    
     var firstName = setOrcName();
     var lastName = orcFamily ? orcFamily.getName() : ''; 
     var family = orcFamily;
-    var card = buildCard(this);
-    var speechTarget = document.createElement('div');
-    speechTarget.classList.add('cell', 'large-3', 'text-left');
-    
     var isTalking = false;
+    
+    // DOM Node elements as properties
+    var card = buildCard(this); // orc card 
+    
+    var cardCell = document.createElement('div'); // direct wrapper for orc card
+    cardCell.classList.add('large-3', 'medium-6', 'orc-wrapper', 'cell');
+    
+    var rowWrapper =  document.createElement('div');
+    rowWrapper.classList.add('grid-x', 'grid-margin-x', 'text-center');
+    
+    // ! NODE element that will be appended to the DOM as a temporary container when an Orc is talking
+    var speechNode = document.createElement('div');
+    speechNode.classList.add('cell', 'large-3', 'text-left');
+    
 
     // Orcish talking management
-    this.talk = (target, next = speechGenerator.next()) =>{
+    this.talk = (target = speechNode, next = speechGenerator.next()) =>{
         this.setIsTalking(true);
-        card.parentNode.parentNode.insertBefore(speechTarget, card.parentNode.nextSibling);
 
         if(!next.done){
             target.innerHTML = this.getFullName() + " say:<br>- ";
@@ -76,7 +91,7 @@ function Orc(orcFamily = null){
                 this.talk(target, speechGenerator.next());
             }, 3000 );
         }else{
-            target.remove();
+            target.innerHTML = '';
             this.setIsTalking(false);
             speechGenerator = orcSpeech(this);
         }
@@ -85,8 +100,9 @@ function Orc(orcFamily = null){
     // Orcish speech event listener
     this.setTalkListener = (domSrc = card ) => {        
         domSrc.addEventListener('click', () => {
-            if(!this.isTalking())
-                this.talk(speechTarget);
+            if(!this.isTalking()){
+                this.talk(speechNode);
+            }
         });
     };
     
@@ -96,7 +112,7 @@ function Orc(orcFamily = null){
 /**
  * ! Render an Orc's card with vanilla js 
  * 
- * @returns DOM tree of a Foundation card wrapped in a grid
+ * @returns DOM tree of a Foundation card
  */ 
  var buildCard = function(orc){
 
@@ -116,20 +132,10 @@ function Orc(orcFamily = null){
     cardSectionHtml.appendChild(orcImg);
     cardSectionHtml.appendChild(orcLabel);
     cardHtml.appendChild(cardSectionHtml);
-    //wrapperHtml.appendChild(cardHtml);
 
-    return cardHtml; // wrapperHtml;
+    return cardHtml;
 };
 
-var buildWrapperForOrcCard = () => {
-    let wrapperHtml = document.createElement('div');
-    wrapperHtml.classList.add('grid-x', 'grid-margin-x', 'text-center');
-    let wrappedWrapperHtml = document.createElement('div');
-    wrappedWrapperHtml.classList.add('large-3', 'medium-6', 'orc-wrapper', 'cell');
-    wrapperHtml.appendChild(wrappedWrapperHtml);
-    
-    return wrapperHtml;
-};
 
 
 
