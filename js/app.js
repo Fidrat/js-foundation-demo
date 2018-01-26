@@ -40,7 +40,7 @@ function Orc(lastName){
     function* orcSpeech(){
         yield "Ur house will burn in the name of the " + me.getLastName() + " clan.";
         yield "Hungry! Lunch yet?";
-        yield me.getFirstName() + " will chew ur eyes!";
+        yield me.getFirstName() + " will chew ur eyeballs!";
     }
 
     // ! Recursive member function using the above generator
@@ -90,7 +90,7 @@ function main(){
         if(someoneIsTalking){
             return;
         }
-        orcArmy[getRandomInt(orcArmy.length,1)].talk( document.getElementById('talk-target') );
+        getRandomArrayValue(orcArmy).talk( document.getElementById('talk-target') );
     });
 
 };
