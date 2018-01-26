@@ -10,12 +10,29 @@ const orcCardHtmlEnd = '</div></div>';
 
 /************** utils ***************/
 
-// Return a random integer between min (included) & max (excluded)
+/**
+ * Return a random integer between min (included) & max (excluded)
+ * @param max int
+ * @param min  int
+ * @returns int
+ */ 
 function getRandomInt(max, min=0){
     return Math.floor(Math.random() * (max - min)) + min;
 };
 
-// Return a concatenated pair of consonant-vowel
+/**
+ * Return a random value from array
+ * @param arr array
+ * @returns mixed array value
+ */
+function getRandomArrayValue(arr){
+    return (arr.constructor === Array) ? arr[Math.floor(Math.random() * arr.length)] : false;
+}
+
+/**
+ * Return a concatenated pair of consonant-vowel
+ * @returns {String}
+ */ 
 function getConsonantVowelPair(){
     return consonant[ getRandomInt(consonant.length) ] + vowel[ getRandomInt(vowel.length) ];
 };
