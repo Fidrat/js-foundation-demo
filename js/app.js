@@ -29,7 +29,7 @@ function Orc(lastName){
     function* orcSpeech(orc){
         yield "Ur house will burn in the name of the " + orc.getLastName() + " clan.";
         yield "Hungry! Lunch yet?";
-        yield orc.getFirstName() + " will chew ur eyes!";
+        yield orc.getFirstName() + " will chew ur eyeballs!";
     }
 
     // ! With the arrow syntax, the this is not redefined and is still set to the parent Orc object
@@ -88,7 +88,7 @@ function main(){
         if (someoneIsTalking) {
             return;
         }
-        orcArmy[getRandomInt(orcArmy.length,1)].talk( document.getElementById('talk-target') );
+        getRandomArrayValue(orcArmy).talk( document.getElementById('talk-target') );
     });
 
 };
