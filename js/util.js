@@ -9,6 +9,19 @@ const orcishFamilyNumber = 2;
 /************** utils ***************/
 
 /**
+ * Return a random color code
+ * @returns String hex color 
+ */
+function getRandomColor() {
+  var letters = '0123456789ABCDEF';
+  var color = '#';
+  for (var i = 0; i < 6; i++) {
+    color += letters[Math.floor(Math.random() * 16)];
+  }
+  return color;
+}
+
+/**
  * Return a random integer between min (included) & max (excluded)
  * @param max int
  * @param min  int
