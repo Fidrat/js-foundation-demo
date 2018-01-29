@@ -3,8 +3,8 @@
 // constants
 const consonant = ['b', 'd', 'f', 'g', 'k', 't', 'p', 'z'];
 const vowel = ['a', 'e', 'i', 'o', 'u', 'y'];
-const armySize = 3;
-const orcishFamilyNumber = 2;
+const armySize = 8;
+const orcishFamilyNumber = 3;
 
 /************** utils ***************/
 

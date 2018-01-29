@@ -16,10 +16,12 @@ function OrcFamily(){
     const id = familyIdGenerator.next().value;
     const name = setOrcName();
     const color = getRandomColor();
+    var familyMembers = new Set(); // ! orc members of this family
 
     this.getId = () => id; // getter for "private id"
     this.getName = () => name; // getter for "private name"
     this.getColor = () => color; // getter for "private color"
+    this.getfamilyMember = () => familyMembers; // getter for "private color"
     
 }; // end of OrcFamily
 
@@ -29,7 +31,8 @@ function OrcFamily(){
  *  @param orcFamily OrcFamily (optionnal)
  **/
 function Orc(orcFamily = null){
-
+    // ! if the orc have a family, add it to the 
+    if(orcFamily){ orcFamily.getfamilyMember().add(this);   }
     
     // getter and setters
     this.getFullName = () => firstName + ' ' + lastName; // getter for the Orc full name - not a property
@@ -41,7 +44,7 @@ function Orc(orcFamily = null){
     this.getCard = () => card; // getter for "private" Orc card
     this.getImg = () => orcImage; // getter for "private" 
     
-    this.getCardWithWrapper = () => { // ! getter for card wrappers : row -> cell -> card & row -> speechCell
+    this.getCardWithWrapper = () => { // getter for card wrappers : row -> cell -> card & row -> speechCell
         rowWrapper.appendChild(cardCell);
         cardCell.appendChild(card);
         rowWrapper.appendChild(speechNode);
@@ -62,11 +65,11 @@ function Orc(orcFamily = null){
     var family = orcFamily;
     var isTalking = false;
     
-    // ! Building an img node 
+    
+    // DOM Node elements as properties
     var orcImage = document.createElement('img');
     orcImage.setAttribute('src', 'img/grunt.png');
     
-    // ! DOM Node elements as properties
     var card = buildCard(this); // orc card     
     
     var cardCell = document.createElement('div'); // direct wrapper for orc card - belong in a foundation's row
@@ -75,7 +78,7 @@ function Orc(orcFamily = null){
     var rowWrapper =  document.createElement('div'); // wrapper for cells. grid-x means its horizontal
     rowWrapper.classList.add('grid-x', 'grid-margin-x', 'text-center');
     
-    // ! NODE element that will be appended to the DOM as a temporary container when an Orc is talking
+    // NODE element that will be appended to the DOM as a temporary container when an Orc is talking
     var speechNode = document.createElement('div');
     speechNode.classList.add('cell', 'large-3', 'text-left');
 
@@ -84,7 +87,7 @@ function Orc(orcFamily = null){
     // Orcish talking management
     this.talk = (target = speechNode, next = speechGenerator.next()) =>{
         this.setIsTalking(true); // Flag to ensure an orc can't talk multiple time at once
-        this.getCard().classList.add('highlight'); // ! highlight an orc when he is talking
+        this.getCard().classList.add('highlight');
 
         if(!next.done){
             target.innerHTML = this.getFullName() + " say:<br>- ";
@@ -104,7 +107,7 @@ function Orc(orcFamily = null){
         }else{
             target.innerHTML = '';
             this.setIsTalking(false);
-            this.getCard().classList.remove('highlight'); // ! remove highlight when talking action is finish
+            this.getCard().classList.remove('highlight');
             speechGenerator = orcSpeech(this);
         }
     };
@@ -122,12 +125,10 @@ function Orc(orcFamily = null){
 /**** end of Orc object constructor ****/
 
 /**
- * ! Render an Orc's card with vanilla js 
- * 
+ * Render an Orc's card with vanilla js 
  * @returns DOM tree of a Foundation card
  */ 
  var buildCard = (orc) =>{
-    // ! quite self explaining
     let cardNode = document.createElement('div');
     cardNode.setAttribute('data-id', 'orc-' + orc.getId() );
     cardNode.classList.add('card', 'medium-3', 'orc-card');
@@ -143,7 +144,7 @@ function Orc(orcFamily = null){
     cardSectionNode.appendChild(orcLabel);
     cardNode.appendChild(cardSectionNode);
     
-    // ! Adding some css on the Node
+    // Adding some css on the Node
     cardNode.style.cursor = 'pointer';
     cardNode.style.borderWidth = '4px';
     
@@ -170,14 +171,27 @@ function main(){
     for(let i=0; i < armySize; i++){
         orcArmy[i] = new Orc( getRandomArrayValue(orcFamilies) );
     }
-    orcArmy[armySize] = new Orc(); // adding one orphan orc
+    
+    for(let i = 0; i < orcishFamilyNumber; i++ ){
+        let familyNode = document.createElement('p');
+        familyNode.textContent = orcFamilies[i].getName() + " family";
+        cElement.appendChild(familyNode);
+        
+        // ! iterating through each orcish family members in order to render them by family
+        orcFamilies[i].getfamilyMember().forEach( function(orc){
+            cElement.appendChild( orc.getCardWithWrapper() );
+            orc.setTalkListener();
+        });
+        
+    }
     
     // render orcs in foundation cards
-    for(let orc of orcArmy){
-        cElement.appendChild( orc.getCardWithWrapper() );
-        orc.setTalkListener();
-        orc.getCard().style.borderColor = orc.getFamily() ? orc.getFamily().getColor() : '';
-    }
+//    for(let orc of orcArmy){
+//        cElement.appendChild( orc.getCardWithWrapper() );
+//        orc.setTalkListener();
+//        orc.getCard().style.borderColor = orc.getFamily() ? orc.getFamily().getColor() : '';
+    //}
+
 
 };
 
